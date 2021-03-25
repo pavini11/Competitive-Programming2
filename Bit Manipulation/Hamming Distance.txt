@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int xb[32],yb[32];
+        memset (xb,0,32);
+        memset (yb,0,32);
+        int i=31,j=31;
+        while(x)
+        {
+            xb[i]=x%2;
+            x/=2;
+            i--;
+        }
+        while(y)
+        {
+            yb[i]=y%2;
+            y/=2;
+            j--;
+        }
+        i=31;
+        vector<int>c;
+        int flag=0;
+        while(i>=0)
+        {
+            if(xb[i]^yb[i])
+            {
+                c.push_back(i);
+                flag++;
+            }
+            if(flag==2)
+                break;
+            i--;
+        }
+        return c[0]-c[1];
+    }
+};
