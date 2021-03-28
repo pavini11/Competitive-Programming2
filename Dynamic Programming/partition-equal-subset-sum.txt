@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int dp[200][10000];
+    bool fun(vector<int>& nums,int n,int i,int sum)
+    {
+        if(sum==0)
+            return true;
+        if(sum<0||i==n)
+            return false;
+        if(dp[i][sum]!=-1)
+            return dp[i][sum];
+        bool right=fun(nums,n,i+1,sum-nums[i]);
+        bool left=fun(nums,n,i+1,sum);
+        return dp[i][sum]=max(right,left);
+    }
+    bool canPartition(vector<int>& nums) {
+        memset(dp,-1,sizeof(dp));
+        int sum=0;
+        for(int i=0;i<nums.size();i++)
+            sum+=nums[i];
+        if(sum&1)
+            return false;
+        sum/=2;
+        return fun(nums,nums.size(),0,sum);
+    }
+};

@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int dp[500][5001];
+    int fun(int amount,vector<int>& coins,int i) {
+        if(amount==0)
+            return 1;
+        if(amount<0||i==coins.size())
+            return 0;
+        if(dp[i][amount]!=-1)
+            return dp[i][amount];
+        int left = fun(amount-coins[i],coins,i);
+        int right = fun(amount,coins,i+1);
+        return dp[i][amount]=left+right;
+    }
+    int change(int amount, vector<int>& coins) {
+        memset(dp,-1,sizeof(dp));
+        return fun(amount,coins,0);
+    }
+};

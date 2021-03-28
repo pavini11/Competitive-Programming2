@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int dp[12][10000];
+    int fun(vector<int>& coins,int amount,int i){
+        if(amount==0)
+            return 0;
+        if(amount<0||i==coins.size())
+            return 1e9;
+        if(dp[i][amount]!=-1)
+            return dp[i][amount];
+        int left = 1+fun(coins,amount-coins[i],i);
+        int right = fun(coins,amount,i+1);
+        return dp[i][amount]=min(left,right);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        memset(dp,-1,sizeof(dp));
+        int ans = fun(coins,amount,0);
+        if(ans>=1e9)
+            return -1;
+        return ans;
+    }
+};
